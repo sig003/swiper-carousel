@@ -1,34 +1,88 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Swiper-carousel   
+## https://swiperjs.com
 
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
+## Code
 ```
+//_app.js
+import GlobalStyle from "./GlobalStyle";
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+function MyApp({ Component, pageProps }) {
+  return (
+    <>
+      <GlobalStyle />
+      <Component {...pageProps} />
+    </>
+  );
+}
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+export default MyApp;
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+//GlobalStyle.js
+//custom navigation
+import { createGlobalStyle } from "styled-components";
 
-## Learn More
+const GlobalStyle = createGlobalStyle`
+  :root {
+    --swiper-theme-color: white;
+  }
+`;
 
-To learn more about Next.js, take a look at the following resources:
+export default GlobalStyle;
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+//swiper.js
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
+import styled from 'styled-components';
 
-## Deploy on Vercel
+const SwiperWrapper = styled.div`
+  width: 100%;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+const Wrapper = styled.div`
+  width: 70%;
+`;
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+const SwiperContent = styled.div`
+  border: 1px solid red;
+  width: 100%;
+  height: 300px;
+  background-color: gray;
+`;
+
+export default function Sw() {
+    return (
+      <>
+        <SwiperWrapper>
+          <Wrapper>
+          <Swiper
+            modules={[Navigation, Pagination, Scrollbar, A11y]}
+            spaceBetween={1}
+            slidesPerView={3}
+            navigation
+            pagination={{ clickable: true }}
+            scrollbar={{ draggable: true }}
+            onSwiper={(swiper) => console.log(swiper)}
+            onSlideChange={() => console.log('slide change')}
+          >
+            <SwiperSlide><SwiperContent>Slide 1</SwiperContent></SwiperSlide>
+            <SwiperSlide><SwiperContent>Slide 2</SwiperContent></SwiperSlide>
+            <SwiperSlide><SwiperContent>Slide 3</SwiperContent></SwiperSlide>
+            <SwiperSlide><SwiperContent>Slide 4</SwiperContent></SwiperSlide>
+            <SwiperSlide><SwiperContent>Slide 4</SwiperContent></SwiperSlide>
+          </Swiper>
+          </Wrapper>
+        </SwiperWrapper>
+      </>
+    );
+}
+```
